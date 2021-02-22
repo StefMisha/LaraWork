@@ -42,3 +42,7 @@ Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
 
 Route::get('/blog', function () {
     return "Блог";});
+
+Route::get('/contact', function(){
+    return view('contact.contact');
+});

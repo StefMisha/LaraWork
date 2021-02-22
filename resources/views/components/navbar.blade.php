@@ -8,19 +8,25 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">Главная</a>
+                    <a class="nav-link" href="{{ route('news.index') }}">Главная</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="about.html">О нас</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="post.html">Sample Post</a>
+                    <a class="nav-link" href="{{ asset('contact') }}">Обратная связь</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Контакты</a>
+                    <a class="nav-link" href="{{ asset('admin') }}">Админка</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Вход</a>
                 </li>
             </ul>
         </div>
     </div>
-    
+
 </nav>

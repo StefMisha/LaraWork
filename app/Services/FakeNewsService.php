@@ -10,6 +10,7 @@ class FakeNewsService //$faker - генератор рандомных знач�
 {
     public function getNews(): array
     {
+
         $news = [];
         $faker = Factory::create('ru_RU');
         for ($i = 0; $i < 5; $i++) {
