@@ -45,6 +45,11 @@
 </header>
 
 <!-- Main Content -->
+
+<a class="btn-danger" style="float: right; width: 180px; text-decoration: none;" href="{{ route('contact.index') }}">Заявка на выгрузку с источника</a>
+
+
+<br>
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">

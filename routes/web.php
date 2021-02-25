@@ -5,6 +5,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,7 @@ Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
 });
 
 //добавить под элемент для выбора обратной связи /Заказать работу /написать отзыв о работе\/ контакты
-
-Route::get('/contact', function(){
-    return view('contact.contact');
+Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
+    Route::get('/', [ContactController::class, 'index'])
+        ->name('index');
 });
