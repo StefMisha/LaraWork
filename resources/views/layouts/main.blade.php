@@ -77,7 +77,10 @@
         </div>
     </div>
 </footer>
-
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top" style="display: inline;">
+    <i class="fas fa-angle-up"></i>
+</a>
 </body>
 
 </html>

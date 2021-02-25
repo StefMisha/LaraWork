@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,16 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/hello/{name}', function (string $name){
-//    $name = "StefMisha";
-//    return "Hello, " . $name;
-//});
-
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('/' , [IndexController::class, 'index'])
         -> name('admin');
     Route::resource('news', AdminNewsController::class);
+    Route::resource('categories', CategoryController::class);
 });
 
 Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
@@ -40,8 +37,7 @@ Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
         ->name('show');
 });
 
-Route::get('/blog', function () {
-    return "Блог";});
+//добавить под элемент для выбора обратной связи /Заказать работу /написать отзыв о работе\/ контакты
 
 Route::get('/contact', function(){
     return view('contact.contact');
