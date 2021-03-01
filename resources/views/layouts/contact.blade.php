@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
 
-    <title> @section('title') Техно Блог @show </title>
+
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -29,16 +29,34 @@
 <x-navbar></x-navbar>
 
 <!-- Page Header -->
-
-<x-header></x-header>
+<header class="masthead" style="background-image: url({{asset('assets/img/contact-bg.jpg')}}">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="page-heading">
+                    <h1>@section('title')  @show</h1>
+                    <span class="subheading">Have questions? I have answers.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 <!-- Main Content -->
+
+@if(request()->RouteIs('contact.OrderDownload'))
+    <a class="btn-danger" style="float: right; width: 180px;padding-left:10px ;text-decoration: none;" href="{{ route('contact.index') }}">Оставить отзыв о нас</a>
+@else
+    <a class="btn-danger" style="float: right; width: 180px;padding-left:10px ;text-decoration: none;" href=" {{ route('contact.OrderDownload') }} ">Заявка на загрузку данных со сторонних источников</a>
+@endif
+
+<br>
 <div class="container">
 
-    @yield('content') {{--вывод контента index.bl...php--}}
+   @yield('content')
 
 </div>
-
 <hr>
 <!-- Footer -->
 <x-footer></x-footer>

@@ -23,7 +23,7 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        return view('contact.OrderDownload');
     }
 
     /**
@@ -34,7 +34,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->download('robots.txt');
     }
 
     /**

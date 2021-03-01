@@ -41,8 +41,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Управление новостями:</h6>
-                <a class="collapse-item" @if(request()->is('admin/categories') || request()->RouteIs('admin/categories.*')) style="color:red;" @endif href="{{ route('admin.categories.index') }}">Категории</a>
-                <a class="collapse-item" @if(request()->is('admin/news') || request()->RouteIs('admin/news.*')) style="color: red;" @endif href=" {{ route('admin.news.index') }} ">Новости</a>
+                <a class="collapse-item" @if(request()->RouteIs('admin.categories.*')) style="color:red;" @endif href="{{ route('admin.categories.index') }}">Категории</a>
+                <a class="collapse-item" @if(request()->RouteIs('admin.news.*')) style="color: red;" @endif href=" {{ route('admin.news.index') }} ">Новости</a>
             </div>
         </div>
     </li>

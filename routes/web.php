@@ -42,4 +42,7 @@ Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
 Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
     Route::get('/', [ContactController::class, 'index'])
         ->name('index');
+
+    Route::get('/OrderDownload', [ContactController::class, 'create'])
+        ->name('OrderDownload');
 });

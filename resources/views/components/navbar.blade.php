@@ -15,6 +15,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ asset('contact') }}">Обратная связь</a>
+                    <a class="nav-link" href="{{ route('contact.OrderDownload') }}">Заявка на выгрузку</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ asset('admin') }}">Админка</a>
