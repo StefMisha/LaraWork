@@ -1,6 +1,4 @@
 @extends('layouts.admin')
-
-
 @section('content')
 
     <div class="container-fluid">
@@ -19,6 +17,7 @@
                     <th>Заголовок</th>
                     <th>Слаг</th>
                     <th>Дата добавления</th>
+                     <th>Управление</th>
                 </tr>
                  </thead>
 
@@ -29,6 +28,7 @@
                             <td>{{ $category -> title }}</td>
                             <td>{{ $category -> slug }}</td>
                             <td>{{ $category -> created_at }}</td>
+                            <td><a href="{{ route('admin.categories.show', ['category' => $category->id]) }}">Пр.</a> &nbsp; <a href="">Ред.</a> &nbsp; <a href="">Уд.</a></td>
                         </tr>
                     @empty
                         <tr>

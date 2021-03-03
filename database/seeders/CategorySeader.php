@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Faker\Factory;
 use Illuminate\Database\Seeder;
-use Psy\Util\Str;
+use Illuminate\Support\Str;
+//use Psy\Util\Str;
 
 class CategorySeader extends Seeder
 {
