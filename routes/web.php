@@ -46,3 +46,5 @@ Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
     Route::get('/OrderDownload', [ContactController::class, 'create'])
         ->name('OrderDownload');
 });
+
+Route::get('/example', fn() => null) ;
