@@ -22,12 +22,14 @@
                 </thead>
 
                 <tbody>
-                @forelse($newsList as $new)
+                @forelse($newsList as $news)
                     <tr>
                         <td>{{ $news -> id }}</td>
                         <td>{{ $news -> title }}</td>
-                        <td>{{ $news -> category }}</td>
+{{--                        <td>{{ $news -> category }}</td>--}}
                         <td>{{ $news -> created_at }}</td>
+                        <td><a href="{{ route('admin.news.show', ['news' => $news->id]) }}">Пр.</a> &nbsp; <a href="">Ред.</a> &nbsp; <a href="">Уд.</a></td>
+
                     </tr>
                 @empty
                     <tr>

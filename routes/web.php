@@ -38,7 +38,6 @@ Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
         ->name('show');
 });
 
-//добавить под элемент для выбора обратной связи /Заказать работу /написать отзыв о работе\/ контакты
 Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
     Route::get('/', [ContactController::class, 'index'])
         ->name('index');

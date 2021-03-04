@@ -20,5 +20,11 @@ class Category extends Model
     {
         return \DB::table('categories')->find($id); //сокращенное написание вывода элемента по id, find - найти
     }
+
+    public function news()
+    {
+        return $this->belongsToMany (News::class, 'categories_has_news', 'category_id', 'news_id');
+    }
 }
+
 
