@@ -17,7 +17,7 @@ class NewsController extends Controller
             ]);
     }
 
-    public function show(FakeNewsService $service, int $id)
+    public function show( $service, int $id)
     {
         $allNews = $service->getNews();
         $news = $allNews[$id] ?? "Not found";

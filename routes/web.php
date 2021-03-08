@@ -46,4 +46,16 @@ Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
         ->name('OrderDownload');
 });
 
-Route::get('/example', fn() => null) ;
+Route::get('/example/{category}', fn(\App\Models\Category $category) => $category);
+
+/*
+Route::get('/collection', function () {
+   $array = ['name' => 'Test', 'age' => 26, 'company' => 'Example',
+       'work' => 'Programmer', 'country' => 'Russia', 'city' => 'Moscow', 'rules' => [
+       'id' => 1, 'title' => 'All previleges'],
+       ['id' => 2, 'title' => 'Example data'
+   ]];
+   $collect = collect($array);
+   dd($collect->shuffle());
+
+});*/

@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('contact')
+@section('content')
 
-    <h2> {{ $news->title }}</h2>
-    <div>{!! $news->description !!}</div>
+    <h2> {{ $news -> title }}</h2>
+    <div>{!! $news -> description !!}</div>
 
 
 

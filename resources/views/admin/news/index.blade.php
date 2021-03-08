@@ -26,9 +26,11 @@
                     <tr>
                         <td>{{ $news -> id }}</td>
                         <td>{{ $news -> title }}</td>
-{{--                        <td>{{ $news -> category }}</td>--}}
+                      <td>{{ $news ->title }}</td> {{--  Как вывести категорию?(--}}
                         <td>{{ $news -> created_at }}</td>
-                        <td><a href="{{ route('admin.news.show', ['news' => $news->id]) }}">Пр.</a> &nbsp; <a href="">Ред.</a> &nbsp; <a href="">Уд.</a></td>
+                        <td><a href="{{ route('admin.news.show', ['news' => $news]) }}">Пр.</a>&nbsp;
+                            <a href="{{ route('admin.news.edit', ['news' => $news]) }}">Ред.</a>&nbsp;
+                            <a href="">Уд.</a></td>
 
                     </tr>
                 @empty
@@ -41,7 +43,7 @@
 
                 </tbody>
             </table>
-
+            {{ $newsList->links() }} {{--   вывод по n шт на страницу--}}
         </div>
 
     </div>

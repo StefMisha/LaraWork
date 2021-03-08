@@ -4,8 +4,8 @@
     <div class="container-fluid">
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Изменить категорию</h1> &nbsp; <strong>
-                <a href="{{ route('admin.categories.index') }}">Список категорий</a>
+            <h1 class="h3 mb-0 text-gray-800">Изменить новость</h1> &nbsp; <strong>
+                <a href="{{ route('admin.news.index') }}">Список новостей</a>
             </strong>
         </div>
 
@@ -17,17 +17,17 @@
                     </div>
                 @endforeach
             @endif
-            <form action="{{ route('admin.categories.update', ['category' => $category]) }}" method="POST">
+            <form action="{{ route('admin.news.update', ['news' => $news]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="col-8">
                     <div class="form-group">
-                        <label for="title">Наименование категории</label>
-                        <input type="text" class="form-control" placeholder="title" name="title" value="{{ $category->title }}">
+                        <label for="title">Наименование новости</label>
+                        <input type="text" class="form-control" placeholder="title" name="title" value="{{ $news->title }}">
                     </div>
                     <div class="form-group">
-                        <label for="title">Описание категории</label>
-                        <textarea class="form-control" name="description">{!! $category->description !!}</textarea>
+                        <label for="title">Описание новости</label>
+                        <textarea class="form-control" name="description">{!! $news->description !!}</textarea>
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success">Сохранить</button>

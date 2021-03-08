@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\FakeNewsService;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -29,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap(); //для корректного вывода переключения листов
+
         Schema::defaultStringLength(191);
     }
 }
