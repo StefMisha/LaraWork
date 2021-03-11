@@ -3,59 +3,67 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsCreateRequest;
+use App\Http\Requests\NewsEditRequest;
 use App\Models\Category;
 use App\Models\News;
+use App\Models\NewsTmp;
 use Illuminate\Http\Request;
+
 
 class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
+/*старый варинате через объект
+        $objNew = new News();
+      $newsList = $objNew->getNews();
+*/
 
-//       $objNew = new News();
-//       $newsList = $objNew->getNews();
+        /* 1 к
+         $newsList = NewsTmp::with('category')->get();
+        dd($newsList);*/
 
+        $newsList = News::select('id', 'title','status', 'created_at')
+            ->with('categories')
+            ->paginate(10);
 
-
-       $newsList = News::select('id', 'title', 'created_at')
-           ->with('categories')
-           ->paginate(10);
-
-       return view('admin.news.index', [
-           'newsList' => $newsList]);
+        return view('admin.news.index', [
+            'newsList' => $newsList]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param $categories
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('admin.news.create');
+        $categories = Category::select('id', 'title', 'slug', 'description', 'created_at')
+            ->get();
+
+
+        return view('admin.news.create', [
+            'categories' => $categories]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param NewsCreateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewsCreateRequest $request)
     {
-        $request->validate([
-            'title' => 'required'
-        ]);
+        //валидация проводится в моделях, сервисах.
+        $data = $request -> validated();
 
-        $date = $request->only(['title', 'description']);
-        $data['slug'] = \Str::slug($date['title']);
-
-        $create = News::create($date);
+        $data['slug'] = \Str::slug($data['title']); //slug берет имя от title
+        $create = News::create($data);//записываем данные в базу
 
         if ($create) {
             return redirect()->route('admin.news.index')
@@ -72,10 +80,11 @@ class NewsController extends Controller
      * @param News $news
      * @return \Illuminate\Http\Response
      */
-    public function show(news $news) //$id ??
+    public function show(news $news)
     {
         return view('admin.news.show', [
-            'news' => $news]);
+            'news' => $news
+        ]);
     }
 
     /**
@@ -94,21 +103,14 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param NewsEditRequest $request
+     * @param News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(NewsEditRequest $request, News $news)
     {
-        $request->validate([
-            'title' => 'required'
-        ]);
 
-        $data = $request->only([
-            'title', 'description'
-        ]);
-
-
+        $data = $request -> validated();
         $save = $news->fill($data)->save();
         if ($save) {
             return redirect()->route('admin.news.index')

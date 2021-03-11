@@ -14,22 +14,23 @@ class Category extends Model
     protected $table = "categories"; //переопределяем имя таблици если оно стандартно, то фассад сам присваивает нужное имя
     protected $primaryKey = "id";
 
-
     protected $fillable = [
         'title', 'slug','description'
     ];
    // protected $guarded = ['id']; // охрана
 
+/* старый вариант выборки
     public function getCategories()
     {
         return \DB::table('categories')
             ->select("id", "title", "slug", "description", "created_at") //селект строку можно убрать, тк get по сути выводит всё
             ->get();
     }
+*/
 
-    public function getCategory(int $id)
+    public function getCategory(int $category)
     {
-        return \DB::table('categories')->find($id); //сокращенное написание вывода элемента по id, find - найти
+        return \DB::table('categories')->find($category); //сокращенное написание вывода элемента по id, find - найти
 
     }
 

@@ -15,25 +15,23 @@ class News extends Model
     protected $primaryKey = "id";
 
     protected $fillable = [
-        'title','description'
+        'title','description', 'status'
     ];
 
-    public function getNews()
+    /*на удаление
+    public function getNews() //выборка передана через контейнер в контроллер
     {
         return \DB::table('news')
        //     ->join('categories', 'category_id', '')
             ->select("id", "title", "created_at") //селект строку можно убрать, тк get по сути выводит всё
             ->get();
 
-    }
+    }*/
 
-    public function getNew(int $id)
+    public function getNew(int $news)
     {
-        return \DB::table('news')->find($id);
+        return \DB::table('news')->find($news);
     }
-
-
-
 
 
     //связи с другими таблицами

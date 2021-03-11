@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryCreateRequest;
+use App\Http\Requests\CategoryEditRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -15,11 +17,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-//          $categories = Category::all();//обращение как к статистическому методу, вернет все записи их модели
-//        $categories = Category::with('newsTmp')->get();
-//        dd($categories->pluck('id', 'title'));
-
-
+/*
+        $categories = Category::all();//обращение как к статистическому методу, вернет все записи их модели
+        $categories = Category::with('newsTmp')->get();
+        dd($categories->pluck('id', 'title'));
+*/
 
         $categories = Category::select('id', 'title', 'slug', 'description', 'created_at')
             ->with('news')
@@ -30,21 +32,22 @@ class CategoryController extends Controller
             'categories' => $categories]);
 
 
-//еще варианты вывода
-//        $objCategory = new Category();
-//        $categories = $objCategory->getCategories();
+/*еще варианты вывода
+       $objCategory = new Category();
+        $categories = $objCategory->getCategories();
 
+        dd($categories);
+        dd($objCategory->getCategory(5));
+*/
 
-//        dd($categories);
-//        dd($objCategory->getCategory(5));
-/*
+/*пример работы с бд
+
         dd(\DB::table('news')->where([ //несколько условий
             ['id', '>', '3'],
             ['description', 'like', '%do%']
         ])->get());
+
 */
-
-
 
     }
 
@@ -61,24 +64,28 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CategoryCreateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryCreateRequest $request)
     {
-        $request->validate([
-            'title' => 'required'
-        ]);
 
-        $data = $request->only(['title', 'description']);
+        /*only, request - проводит валидацию и передает только нужные данные
+
+                $data = $request->only([
+                    'title', 'description'
+                ]);
+
+        */
+
+        $data = $request->validated();
+
         $data['slug'] = \Str::slug($data['title']);
-
         $create = Category::create($data);
 
         if ($create) {
             return redirect()->route('admin.categories.index')
                 ->with('success', 'Запись успешно добавлена');
-
         }
         return back()->withInput()
             ->with('errors','Не удалось добавить запись');
@@ -115,19 +122,21 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param CategoryEditRequest $request
      * @param Category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryEditRequest $request, Category $category)
     {
-        $request->validate([
-            'title' => 'required'
-        ]);
+/*only, request - проводит валидацию и передает только нужные данные
 
         $data = $request->only([
             'title', 'description'
         ]);
+
+*/
+        $data = $request->validated();
+
         $data['slug'] = \Str::slug($data['title']);
 
         $save = $category->fill($data)->save();

@@ -23,11 +23,17 @@
                 <div class="col-8">
                     <div class="form-group">
                         <label for="title">Наименование категории</label>
-                        <input type="text" class="form-control" placeholder="title" name="title" value="{{ $category->title }}">
+                        <input type="text" class="form-control" placeholder="{{ $category->title }}" name="title" value="{{ $category->title }}">
+                        @error('title')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="title">Описание категории</label>
-                        <textarea class="form-control" name="description">{!! $category->description !!}</textarea>
+                        <textarea class="form-control" placeholder="{!! $category->description !!}" {{-- типа если всё удалил и забыл что было, на фоне останется старое название --}}name="description">{!! $category->description !!}</textarea>
+                        @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <br>
                     <button type="submit" class="btn btn-success">Сохранить</button>

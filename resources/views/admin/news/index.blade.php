@@ -18,16 +18,25 @@
                     <th>Заголовок</th>
                     <th>Категория</th>
                     <th>Дата добавления</th>
+                    <th>Видимость</th>
+                    <th>Управление</th>
                 </tr>
                 </thead>
 
                 <tbody>
+
                 @forelse($newsList as $news)
                     <tr>
+
                         <td>{{ $news -> id }}</td>
                         <td>{{ $news -> title }}</td>
-                      <td>{{ $news ->title }}</td> {{--  Как вывести категорию?(--}}
+                        <td>
+                        @foreach ($news->categories as $category)
+                            <span>{{ $category->title }}. </span>
+                        @endforeach
+                        </td>
                         <td>{{ $news -> created_at }}</td>
+                        <td>{{ $news -> status }}</td>
                         <td><a href="{{ route('admin.news.show', ['news' => $news]) }}">Пр.</a>&nbsp;
                             <a href="{{ route('admin.news.edit', ['news' => $news]) }}">Ред.</a>&nbsp;
                             <a href="">Уд.</a></td>
