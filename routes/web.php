@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\ContactController;
 
@@ -22,14 +24,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/account', [AccountController::class])->name('account');
+    Route::group(['middleware' => 'admin'], function () {
+
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::get('/' , [IndexController::class, 'index'])
         -> name('admin');
     Route::resource('news', AdminNewsController::class);
     Route::resource('categories', CategoryController::class);
 });
 
-Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
+    Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
     Route::get('/',[NewsController::class,'index'])
         ->name('index');
 
@@ -38,7 +44,7 @@ Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
         ->name('show');
 });
 
-Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
+    Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
     Route::get('/', [ContactController::class, 'index'])
         ->name('index');
 
@@ -46,7 +52,18 @@ Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
         ->name('OrderDownload');
 });
 
+    });
+});
+
+
+//test route
 Route::get('/example/{category}', fn(\App\Models\Category $category) => $category);
+
+
+Route::get('/session', function () {
+    session(['testsession' => 'value']);
+    return redirect('/');
+});
 
 /*
 Route::get('/collection', function () {
@@ -59,3 +76,7 @@ Route::get('/collection', function () {
    dd($collect->shuffle());
 
 });*/
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

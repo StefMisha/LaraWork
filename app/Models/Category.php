@@ -13,11 +13,13 @@ class Category extends Model
 
     protected $table = "categories"; //переопределяем имя таблици если оно стандартно, то фассад сам присваивает нужное имя
     protected $primaryKey = "id";
-
+/*
     protected $fillable = [
         'title', 'slug','description'
     ];
-   // protected $guarded = ['id']; // охрана
+*/
+
+    protected $guarded = []; // охрана
 
 /* старый вариант выборки
     public function getCategories()
@@ -40,11 +42,12 @@ class Category extends Model
     {
         return $this->belongsToMany (News::class, 'categories_has_news', 'category_id', 'news_id');
     }
-
+/* 1 t-m
     public function newsTmp(): hasMany
     {
         return $this->hasMany(NewsTmp::class, 'category_id', 'id');
     }
+*/
 }
 
 

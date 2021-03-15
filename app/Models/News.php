@@ -13,11 +13,11 @@ class News extends Model
 
     protected $table = "news"; //переопределяем имя таблици если оно стандартно, то фассад сам присваивает нужное имя
     protected $primaryKey = "id";
-
+/*
     protected $fillable = [
         'title','description', 'status'
-    ];
-
+    ];*/
+    protected $guarded = []; //свойства под запретом, если нет свойств в массиве, то запрета редактирования нет
     /*на удаление
     public function getNews() //выборка передана через контейнер в контроллер
     {
@@ -40,10 +40,12 @@ class News extends Model
     {
         return $this->belongsToMany (Category::class, 'categories_has_news', 'news_id', 'category_id');
     }
+
+/* 1 t-m
     public function newsTmp(): hasMany
     {
         return $this->hasMany(NewsTmp::class, 'news_id', 'id');
     }
-
+*/
 }
 

@@ -46,9 +46,9 @@ class NewsController extends Controller
         $categories = Category::select('id', 'title', 'slug', 'description', 'created_at')
             ->get();
 
-
         return view('admin.news.create', [
-            'categories' => $categories]);
+            'categories' => $categories
+            ]);
     }
 
     /**
@@ -60,18 +60,22 @@ class NewsController extends Controller
     public function store(NewsCreateRequest $request)
     {
         //валидация проводится в моделях, сервисах.
-        $data = $request -> validated();
 
-        $data['slug'] = \Str::slug($data['title']); //slug берет имя от title
-        $create = News::create($data);//записываем данные в базу
+        dd($request->input());
+        $model = News::create($request->validated());
+        $model->categories()->sync($request->input('categories'));
 
-        if ($create) {
+//        $data = $request -> validated();
+//
+//        $data['slug'] = \Str::slug($data['title']); //slug берет имя от title
+//        $create = News::create($data);//записываем данные в базу
+//
+//        if ($create) {
             return redirect()->route('admin.news.index')
                 ->with('success', 'Новость добавлена');
-
-        }
-        return back()->withInput()
-            ->with('errors', 'Не удалось добавить запись');
+//        }
+//        return back()->withInput()
+//            ->with('errors', 'Не удалось добавить запись');
     }
 
     /**
