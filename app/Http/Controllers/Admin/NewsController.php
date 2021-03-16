@@ -61,7 +61,7 @@ class NewsController extends Controller
     {
         //валидация проводится в моделях, сервисах.
 
-        dd($request->input());
+        //dd($request->input());
         $model = News::create($request->validated());
         $model->categories()->sync($request->input('categories'));
 

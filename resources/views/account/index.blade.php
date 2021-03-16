@@ -1,4 +1,4 @@
-<h3>Привет,  {{ Auth::user()->name }}  </h3>
+<h3>Привет,  @if(Auth::check()){{ Auth::user()->name }} @endif </h3>
 <br>
 <p>
     <strong>

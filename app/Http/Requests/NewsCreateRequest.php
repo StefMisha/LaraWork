@@ -24,10 +24,10 @@ class NewsCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'category' => 'required',
-            'title' => 'required', 'string', 'min:3', 'max:191',
-            'description' => 'required',
-            'status' => 'required'
+            'category' => ['required'],
+            'title' => ['required', 'string', 'min:3', 'max:191'],
+            'description' => ['required'],
+            'status' => ['required']
 
         ];
     }

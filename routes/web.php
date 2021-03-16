@@ -25,7 +25,10 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/account', [AccountController::class])->name('account');
+
+    Route::get('/account', AccountController::class)
+        ->name('account');
+
     Route::group(['middleware' => 'admin'], function () {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
@@ -59,7 +62,6 @@ Route::group(['middleware' => 'auth'], function() {
 //test route
 Route::get('/example/{category}', fn(\App\Models\Category $category) => $category);
 
-
 Route::get('/session', function () {
     session(['testsession' => 'value']);
     return redirect('/');
@@ -79,4 +81,5 @@ Route::get('/collection', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
