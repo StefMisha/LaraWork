@@ -32,9 +32,11 @@
                             <td>{{ $category -> title }} (Колл-во новостей: {{ $category->news->count() }})</td>
                             <td>{{ $category -> slug }}</td>
                             <td>{{ $category -> created_at }}</td>
-                            <td><a href="{{ route('admin.categories.show', ['category' => $category]) }}">Пр.</a> &nbsp;
-                                <a href="{{ route('admin.categories.edit', ['category' => $category]) }}">Ред.</a> &nbsp;
-                                <a href="">Уд.</a></td>
+                            <td>
+                                <a href="{{ route('admin.categories.show', $category) }}">Пр.</a>&nbsp;
+                                <a href="{{ route('admin.categories.edit', $category) }}">Ред.</a> &nbsp;
+                                <a href="">Уд.</a>
+                            </td>
                         </tr>
                     @empty
                         <tr>

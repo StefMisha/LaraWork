@@ -13,17 +13,17 @@ class News extends Model
 
     protected $table = "news"; //переопределяем имя таблици если оно стандартно, то фассад сам присваивает нужное имя
     protected $primaryKey = "id";
-/*
+
     protected $fillable = [
         'title','description', 'status'
-    ];*/
-    protected $guarded = []; //свойства под запретом, если нет свойств в массиве, то запрета редактирования нет
+    ];
+  //  protected $guarded = []; //свойства под запретом, если нет свойств в массиве, то запрета редактирования нет
+
     /*на удаление
     public function getNews() //выборка передана через контейнер в контроллер
     {
         return \DB::table('news')
-       //     ->join('categories', 'category_id', '')
-            ->select("id", "title", "created_at") //селект строку можно убрать, тк get по сути выводит всё
+       //->select("id", "title", "created_at") //селект строку можно убрать, тк get по сути выводит всё
             ->get();
 
     }*/

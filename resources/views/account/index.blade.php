@@ -1,5 +1,6 @@
 <h3>Привет,  @if(Auth::check()){{ Auth::user()->name }} @endif </h3>
 <br>
+<img src="{{ Auth::user()->avatar }}" class="icon">
 <p>
     <strong>
         <a href="{{ route('admin.admin') }}">Переход в админку</a>

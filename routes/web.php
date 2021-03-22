@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ParserController;
+use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
@@ -8,6 +10,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +27,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function() { //группа видимости админа
 
     Route::get('/account', AccountController::class)
         ->name('account');
@@ -36,9 +39,11 @@ Route::group(['middleware' => 'auth'], function() {
         -> name('admin');
     Route::resource('news', AdminNewsController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('parser', ParserController::class);
 });
-
-    Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
+    });
+});
+Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
     Route::get('/',[NewsController::class,'index'])
         ->name('index');
 
@@ -47,16 +52,41 @@ Route::group(['middleware' => 'auth'], function() {
         ->name('show');
 });
 
-    Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
+Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
     Route::get('/', [ContactController::class, 'index'])
         ->name('index');
-
     Route::get('/OrderDownload', [ContactController::class, 'create'])
         ->name('OrderDownload');
 });
+Auth::routes();
 
-    });
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+
+
+
+//группа доступа для гостей, авторизация через VK
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/auth/vk/init', [SocialiteController::class, 'init'])
+        ->name('vk.init');
+    Route::get('/auth/vk/callback', [SocialiteController::class, 'callback'])
+        ->name('vk.callback');
+    //facebook
+    Route::get('/auth/vk/init', [SocialiteController::class, 'init'])
+        ->name('vk.init');
+    Route::get('/auth/vk/callback', [SocialiteController::class, 'callback'])
+        ->name('vk.callback');
+//авторизация через facebook
+    Route::get('login/facebook', [LoginController::class, 'redirectFacebook'])
+        ->name('login.facebook');
+    Route::get('login/facebook/callback', [LoginController::class, 'handleFacebookCallback']);
+
 });
+
+
+
+
+
 
 
 //test route
@@ -79,7 +109,4 @@ Route::get('/collection', function () {
 
 });*/
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-    ->name('home');

@@ -21,6 +21,25 @@
             @endif
             <form action="{{ route('admin.news.store') }}" method="POST">
                 @csrf
+
+                {{--<ul class="list-group"> чек боксы
+    @foreach($categories as $category)
+        <label class="list-group-item">
+            <input
+                name="categories[]"
+                class="form-check-input me-1 {{ $errors->has('categories[]') ? 'is-invalid' : '' }}"
+                type="checkbox"
+                {{ $articleCategories->contains($category->id) ? 'checked' : '' }}
+                value="{{ $category->id }}"
+            >
+            {{ $category->name }}
+        </label>
+        @foreach ($errors->get('categories[]') as $error)
+            <span class="invalid-feedback">{{ $error }}</span>
+        @endforeach
+    @endforeach
+</ul>--}}
+
                 <div class="col-8">
                     <div class="form-group">
                         <label for="category">Выбор категории</label>
@@ -28,9 +47,9 @@
 {{--Передедлать под выборку нескольких вариантов через чекбокс--}}
                             <option></option>
                             @forelse($categories as $category)
-                                <option>{{ $category->title }}</option>
+                                <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @empty
-                                <option value="">Пусто</option>
+                                <option>Пусто</option>
                             @endforelse
                         </select>
                         @error('category')

@@ -38,13 +38,14 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param $categories
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
         $categories = Category::select('id', 'title', 'slug', 'description', 'created_at')
             ->get();
+
+//        $categories = $category->getCategories(); TODO: Перенести в сервис
 
         return view('admin.news.create', [
             'categories' => $categories
@@ -63,7 +64,7 @@ class NewsController extends Controller
 
         //dd($request->input());
         $model = News::create($request->validated());
-        $model->categories()->sync($request->input('categories'));
+        $model->categories()->attach($request->input('category'));
 
 //        $data = $request -> validated();
 //
@@ -84,7 +85,7 @@ class NewsController extends Controller
      * @param News $news
      * @return \Illuminate\Http\Response
      */
-    public function show(news $news)
+    public function show(News $news)
     {
         return view('admin.news.show', [
             'news' => $news
@@ -116,6 +117,7 @@ class NewsController extends Controller
 
         $data = $request -> validated();
         $save = $news->fill($data)->save();
+
         if ($save) {
             return redirect()->route('admin.news.index')
                 ->with('success', 'Запись успешно обновлена');
