@@ -77,9 +77,9 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/auth/vk/callback', [SocialiteController::class, 'callback'])
         ->name('vk.callback');
 //авторизация через facebook
-    Route::get('login/facebook', [LoginController::class, 'redirectFacebook'])
-        ->name('login.facebook');
-    Route::get('login/facebook/callback', [LoginController::class, 'handleFacebookCallback']);
+    Route::get('/auth/facebook/redirectToFacebook', [SocialiteController::class, 'redirectToFacebook'])
+        ->name('facebook.redirectToFacebook');
+    Route::get('/auth/facebook/handleFacebookCallback', [SocialiteController::class, 'handleFacebookCallback']);
 
 });
 

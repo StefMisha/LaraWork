@@ -14,7 +14,7 @@
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-3">
                                     <a href="{{ route('vk.init') }}" class="btn btn-outline-primary btn-block">Вход через ВК</a>
-                                    <a href="{{ route('login.facebook') }}" class="btn btn-primary btn-block">Вход через Facebook</a>
+                                    <a href="{{ route('facebook.redirectToFacebook') }}" class="btn btn-primary btn-block">Вход через Facebook</a>
                                 </div>
                             </div>
 
