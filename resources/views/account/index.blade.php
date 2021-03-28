@@ -6,6 +6,11 @@
         <a href="{{ route('admin.admin') }}">Переход в админку</a>
     </strong>
 </p>
+<p>
+    <strong>
+        <a href="{{ route('unisharp.lfm.') }}"> File Manager</a>
+    </strong>
+</p>
 <br>
 <form method="post" action="{{ route('logout') }}">
     @csrf

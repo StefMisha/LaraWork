@@ -60,10 +60,17 @@ class NewsController extends Controller
      */
     public function store(NewsCreateRequest $request)
     {
-        //валидация проводится в моделях, сервисах.
+//сохрание изображения
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $ext = $image->getClientOriginalExtension();
+            $fileName = uniqid() . "." . $ext;//изменение имени файла
 
+            $data['image'] = $image->storeAs('news', $fileName, 'public'); //каталог для сохранения
+        }
+        //валидация проводится в моделях, сервисах.
         //dd($request->input());
-        $model = News::create($request->validated());
+        $model = News::create($request->validated()); //сразу из реквест валидации сохраняем в бд
         $model->categories()->attach($request->input('category'));
 
 //        $data = $request -> validated();

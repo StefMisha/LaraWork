@@ -11,6 +11,7 @@ use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\LoginController;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +40,20 @@ Route::group(['middleware' => 'auth'], function() { //группа видимо�
         -> name('admin');
     Route::resource('news', AdminNewsController::class);
     Route::resource('categories', CategoryController::class);
-    Route::resource('parser', ParserController::class);
+
+    Route::group(['prefix' => 'parser', 'as' => 'parser.'], function () {
+        Route::get('/', [ParserController::class, 'index'])
+            ->name('index');
+        Route::get('/parser', [ParserController::class, 'parsing'])
+            ->name('parsing');
+    });
+
 });
+    //file manager
+        Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+            Lfm::routes();
+        });
+
     });
 });
 Route::group(['prefix' => 'news', 'as' => 'news.'], function() {

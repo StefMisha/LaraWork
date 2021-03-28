@@ -14,8 +14,8 @@ class News extends Model
     protected $table = "news"; //переопределяем имя таблици если оно стандартно, то фассад сам присваивает нужное имя
     protected $primaryKey = "id";
 
-    protected $fillable = [
-        'title','description', 'status'
+    protected $fillable = [  //разрешенные элементы ждя редактирование
+        'title','description', 'status', 'image'
     ];
   //  protected $guarded = []; //свойства под запретом, если нет свойств в массиве, то запрета редактирования нет
 

@@ -2,24 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\NewsJob;
 use App\Services\ParserService;
 use Illuminate\Http\Request;
 
 class ParserController extends Controller
 {
-    public function index(ParserService $service,Request $request)
+
+    public function index()
+    {
+        $parsingLinks = [
+            'https://news.yandex.ru/army.rss',
+            'https://news.yandex.ru/music.rss',
+            'https://news.yandex.ru/auto.rss',
+            'https://news.yandex.ru/martial_arts.rss',
+            'https://news.yandex.ru/communal.rss',
+            'https://news.yandex.ru/health.rss',
+            'https://news.yandex.ru/games.rss',
+            'https://news.yandex.ru/internet.rss',
+            'https://news.yandex.ru/cyber_sport.rss',
+            'https://news.yandex.ru/movies.rss',
+            'https://news.yandex.ru/cosmos.rss',
+            'https://news.yandex.ru/culture.rss',
+        ];
+        foreach ($parsingLinks as $link) {
+            NewsJob::dispatch($link);
+        }
+
+        echo "Работа выполнена";
+
+    }
+
+    public function parsing(ParserService $service,Request $request)
     {
         $parsingLinks = [
             'https://news.yandex.ru/army.rss',
             'https://news.yandex.ru/music.rss',
             'https://news.yandex.ru/auto.rss'];
 
-       $arr = $request->input();
-       if (empty($arr)) {
-           $result = $parsingLinks[0];
-       } else {
-           $result = str_ireplace('_' , '.', array_key_first($arr)); //получаю первый ключ массива, затем переменяю нижиний дефис на .
-       }
+        $arr = $request->input();
+        if (empty($arr)) {
+            $result = $parsingLinks[0];
+        } else {
+            $result = str_ireplace('_' , '.', array_key_first($arr)); //получаю первый ключ массива, затем переменяю нижиний дефис на .
+        }
 
         $news = $service->start($result);
 
@@ -28,4 +54,5 @@ class ParserController extends Controller
             'links' => $parsingLinks,
         ]);
     }
+
 }

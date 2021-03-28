@@ -19,7 +19,7 @@
                     </div>
                 @endforeach
             @endif
-            <form action="{{ route('admin.news.store') }}" method="POST">
+         <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data"> {{-- обозначение того что форма могли принимать файлы  enctype="multipart/form-data"--}}
                 @csrf
 
                 {{--<ul class="list-group"> чек боксы
@@ -77,7 +77,7 @@
                         <input class="btn btn-block btn-danger" id="image" name="image" type="file" ">
                     </div>
                     <div class="form-groupe">
-                        <label for="description">Статус новости</label>
+                        <label for="description" id="description">Статус новости</label>
                         <select class="form-control" name="status" id="status">
                             <option>draft</option>
                             <option>published</option>
@@ -95,3 +95,14 @@
     </div>
 
 @endsection
+@push('js')
+    <script type="text/javascript">
+
+        ClassicEditor
+            .create( document.querySelector( '#description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+
+    </script>
+@endpush

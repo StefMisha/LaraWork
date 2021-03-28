@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="title">Описание категории</label>
-                    <textarea class="form-control" placeholder="Краткое описание категории" name="description">{!! old('description') !!}</textarea>
+                    <textarea class="form-control" placeholder="Краткое описание категории" name="description" id="description">{!! old('description') !!}</textarea>
                     @error('description')
                          <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
@@ -42,3 +42,14 @@
     </div>
 
 @endsection
+@push('js')
+    <script type="text/javascript">
+
+        ClassicEditor
+            .create( document.querySelector( '#description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+
+    </script>
+@endpush
