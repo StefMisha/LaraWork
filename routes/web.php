@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParserController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +31,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function() { //группа видимости админа
 
-    Route::get('/account', AccountController::class)
-        ->name('account');
+    Route::get('/account', AccountController::class)->name('account');
 
     Route::group(['middleware' => 'admin'], function () {
 

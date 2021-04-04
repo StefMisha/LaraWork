@@ -4,13 +4,13 @@
 namespace App\Services;
 
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\log;
 use Illuminate\Support\Facades\Storage;
-use Orchestra\Parser\Xml\Facade as XmlParser;
+use Illuminate\Support\Str;
 
 class ParserService
 {
-    public string $url;
+    protected string $url;
 
     public function __construct(string $url)
     {
@@ -18,42 +18,22 @@ class ParserService
 
     }
 
-    public function startWithJob() : void //для очереди startWithJob
+    public function startWithJob(): void //для очереди startWithJob
     {
-        $xml = XmlParser::load($this->url);
-
-      $data =  $xml->parse([
-            'title' => [
-                'user' => 'channel.title'
-            ],
-            'link' => [
-                'uses' => 'channel.link'
-            ],
-            'description' => [
-                'uses' => 'channel.description'
-            ],
-            'image' => [
-                'uses' => 'channel.image.url'
-            ],
-            'news' => [
-                'uses' => 'channel.item[title,link,guid,description,pubDate]'
-            ]
-        ]);
-//проверка выгузки с источников
+       $data = $this->start();
         try {
-            $name = \Str::between($data['link'], '.ru/', '.html?');
-            \Storage::disk('public')
-                ->put("news/parser/$name.txt", json_encode($data));
+            $name = Str::between($data['link'], '.ru/', '.html?');
+            Storage::disk('public')->put("news/parser/$name.txt", json_encode($data));
         } catch (\Throwable $e) {
             Log::debug($e->getMessage());
         }
     }
 
-//временный вывод новостей по ссылкам из ParserController
+    //временный вывод новостей по ссылкам из ParserController
 
-    public function start(string $url) : array
+    public function start() : array
     {
-        $xml = XmlParser::load($url);
+        $xml = XmlParser::load($this->url);
 
         return  $xml->parse([
             'title' => [
@@ -73,5 +53,4 @@ class ParserService
             ]
         ]);
     }
-
 }
