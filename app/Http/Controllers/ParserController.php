@@ -33,12 +33,13 @@ class ParserController extends Controller
 
     }
 
-    public function parsing(ParserService $service,Request $request)
+    public function parsing(Request $request)
     {
         $parsingLinks = [
             'https://news.yandex.ru/army.rss',
             'https://news.yandex.ru/music.rss',
-            'https://news.yandex.ru/auto.rss'];
+            'https://news.yandex.ru/auto.rss'
+        ];
 
         $arr = $request->input();
         if (empty($arr)) {
@@ -47,7 +48,7 @@ class ParserController extends Controller
             $result = str_ireplace('_' , '.', array_key_first($arr)); //получаю первый ключ массива, затем переменяю нижиний дефис на .
         }
 
-        $news = $service->start($result);
+        $news = (new ParserService($result))->start();
 
         return view('admin.news.parser', [
             'news' => $news,
