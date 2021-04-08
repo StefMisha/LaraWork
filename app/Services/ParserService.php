@@ -1,9 +1,9 @@
-<?php declare(strict_types=1);
-
+<?php
+declare(strict_types=1);
 
 namespace App\Services;
 
-
+use Orchestra\Parser\Xml\Facade as XmlParser;
 use Illuminate\Support\Facades\log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

@@ -30,35 +30,27 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function() { //группа видимости админа
-
     Route::get('/account', AccountController::class)->name('account');
-
     Route::group(['middleware' => 'admin'], function () {
+        Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+            Route::get('/' , [IndexController::class, 'index'])->name('admin');
+            Route::resource('news', AdminNewsController::class);
+            Route::resource('categories', CategoryController::class);
 
-    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
-    Route::get('/' , [IndexController::class, 'index'])
-        -> name('admin');
-    Route::resource('news', AdminNewsController::class);
-    Route::resource('categories', CategoryController::class);
-
-    Route::group(['prefix' => 'parser', 'as' => 'parser.'], function () {
-        Route::get('/', [ParserController::class, 'index'])
-            ->name('index');
-        Route::get('/parser', [ParserController::class, 'parsing'])
-            ->name('parsing');
-    });
-
-});
-    //file manager
+            Route::group(['prefix' => 'parser', 'as' => 'parser.'], function () {
+                Route::get('/', [ParserController::class, 'index'])->name('index');
+                Route::get('/parser', [ParserController::class, 'parsing'])->name('parsing');
+            });
+        });
+        //file manager
         Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
             Lfm::routes();
         });
-
     });
 });
+
 Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
-    Route::get('/',[NewsController::class,'index'])
-        ->name('index');
+    Route::get('/',[NewsController::class,'index'])->name('index');
 
     Route::get('/{id}', [NewsController::class,'show'])
         ->where('id', '\d+')
@@ -66,34 +58,25 @@ Route::group(['prefix' => 'news', 'as' => 'news.'], function() {
 });
 
 Route::group(['prefix' => 'contact', 'as' => 'contact.'], function() {
-    Route::get('/', [ContactController::class, 'index'])
-        ->name('index');
-    Route::get('/OrderDownload', [ContactController::class, 'create'])
-        ->name('OrderDownload');
+    Route::get('/', [ContactController::class, 'index'])->name('index');
+    Route::get('/OrderDownload', [ContactController::class, 'create'])->name('OrderDownload');
 });
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-    ->name('home');
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 //группа доступа для гостей, авторизация через VK
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/auth/vk/init', [SocialiteController::class, 'init'])
-        ->name('vk.init');
-    Route::get('/auth/vk/callback', [SocialiteController::class, 'callback'])
-        ->name('vk.callback');
+    Route::get('/auth/vk/init', [SocialiteController::class, 'init'])->name('vk.init');
+    Route::get('/auth/vk/callback', [SocialiteController::class, 'callback'])->name('vk.callback');
     //facebook
-    Route::get('/auth/vk/init', [SocialiteController::class, 'init'])
-        ->name('vk.init');
-    Route::get('/auth/vk/callback', [SocialiteController::class, 'callback'])
-        ->name('vk.callback');
+    Route::get('/auth/vk/init', [SocialiteController::class, 'init'])->name('vk.init');
+    Route::get('/auth/vk/callback', [SocialiteController::class, 'callback'])->name('vk.callback');
 //авторизация через facebook
     Route::get('/auth/facebook/redirectToFacebook', [SocialiteController::class, 'redirectToFacebook'])
         ->name('facebook.redirectToFacebook');
     Route::get('/auth/facebook/handleFacebookCallback', [SocialiteController::class, 'handleFacebookCallback']);
-
 });
 
 

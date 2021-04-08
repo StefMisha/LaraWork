@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ParserController extends Controller
 {
 
-    public function index()
+    public function index()//TODO: передать отдельно ссылки дял просмотра новостей на найте через ParserService
     {
         $parsingLinks = [
             'https://news.yandex.ru/army.rss',
@@ -33,7 +33,7 @@ class ParserController extends Controller
 
     }
 
-    public function parsing(Request $request)
+    public function parsing(Request $request)//TODO: передать отдельно ссылки дял просмотра новостей на найте через ParserService
     {
         $parsingLinks = [
             'https://news.yandex.ru/army.rss',
